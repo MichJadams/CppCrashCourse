@@ -1,12 +1,19 @@
 #include <cstdio>
+#include <iostream>
 
 int main(){
+  char x = 'H';
+  char32_t y = U'\u0041';
 
-  double an = 6.0221409e23;
-  printf("avogadro's number: %le %lf %lg \n", an, an, an);
+  // okay, so if you terminal does not support unicode, it will
+  // melt it down to a decimal 
+  std::cout << " unicode? " << y << '\n';
+  printf("Windows start with %c %c. \n", x,y);
 
-  float hp = 9.75;
-  printf("Hogwart's platform: %e %f %g\n", hp, hp, hp);
+  // I added this myself I was having trouble actually spotting the
+  // difference between the wchar_t and the char.
+  printf("this is the size difference %d %d", sizeof(x), sizeof(y));
+  
   
 }
 
