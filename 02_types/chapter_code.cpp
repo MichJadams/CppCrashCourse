@@ -2,9 +2,11 @@
 
 int main(){
 
-  unsigned int a = 3669732608;
-  printf("Yabba %x ! \n", a);
+  double an = 6.0221409e23;
+  printf("avogadro's number: %le %lf %lg \n", an, an, an);
 
-  unsigned int b = 69;
-  printf("There are %u, %o leaves here \n", b, b);
+  float hp = 9.75;
+  printf("Hogwart's platform: %e %f %g\n", hp, hp, hp);
+  
 }
+
