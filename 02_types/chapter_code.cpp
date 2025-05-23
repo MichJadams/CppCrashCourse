@@ -1,19 +1,16 @@
 #include <cstdio>
 
-// example from the book uses Neal Stephenson's Seveneves
-enum class Race {
-  Dinan,
-  Teklan,
-  Ivyn,
-  Moiran,
-  Camite,
-  Julian,
-  Aidan
+struct Book {
+  char name[256];
+  int year;
+  int pages;
+  bool hardcover;
 };
 
 int main(){
-  Race langobard_race = Race::Aidan; 
 
-  printf("how do you print enums? %d", Race::Dinan);
+  Book neuromancer;
+  neuromancer.pages = 271;
+  printf("Neuromancer has %s pages.", neuromancer.name); 
 }
 
