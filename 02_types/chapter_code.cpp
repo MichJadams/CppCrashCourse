@@ -3,15 +3,15 @@
 
 int main(){
   char x = 'H';
-  char32_t y = U'\u0041';
+  char32_t y = U'\U0001F37A';
 
-  // okay, so if you terminal does not support unicode, it will
-  // melt it down to a decimal 
-  std::cout << " unicode? " << y << '\n';
-  printf("Windows start with %c %c. \n", x,y);
+  const char* emoji = "other things ? \xF0\x9F\x98\x80";
 
-  // I added this myself I was having trouble actually spotting the
-  // difference between the wchar_t and the char.
+  printf(" is this an emoji? %s", emoji);
+
+  std::cout << " unicode? " << static_cast<int>(y) << std::endl;
+  printf("Windows start \x41 with %c %b. \n", x,y);
+
   printf("this is the size difference %d %d", sizeof(x), sizeof(y));
   
   
