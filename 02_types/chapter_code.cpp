@@ -3,15 +3,18 @@
 
 int main(){
 
-  unsigned long maximum = 0;
+  char alphabet[27];
 
-  int arr[] = {10,20,4,100,1000};
-
-  for(int val: arr){
-    if(maximum < val){
-      maximum = val;
-    }
+  int letter = 97;
+  for(int i = 0; i < 26; i ++){
+    alphabet[i] = letter;
+    letter ++;
   }
-  printf("this is the max %d.\n", maximum);
+  printf("alphabeter \n %s", alphabet);
+
+  for (int i =0; i < 26; i ++){
+    alphabet[i] = i + 65;
+  }
+  printf("upper case \n %s", alphabet);
 }
 
