@@ -11,6 +11,7 @@ struct ClockOfTheLongNow {
     year = new_year;
     return true;
   }
+  
   int get_year(){
     return year;
   }
@@ -18,11 +19,27 @@ private:
   int year;
 };
 
+class ClassyLongNow {
+  int year;
+public:
+  void set_year(int new_year){
+    if(new_year < 2019) return false;
+    year = new_year;
+    return true;
+  }
+  bool add_year(){
+    year++;
+  }
+  int get_year(){
+    return year;
+  }
+}
+
 int main(){
 
   ClockOfTheLongNow clock;
-  clock.year = 2017;
+  clock.set_year(2020);
   clock.add_year();
-  printf("year %d\n", clock.year);
+  printf("year %d\n", clock.get_year());
 }
 
