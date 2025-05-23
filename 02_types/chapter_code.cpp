@@ -2,13 +2,16 @@
 
 
 int main(){
-  int arr[] = { 1, 2, 3, 4, };
-  printf("The third element is %d.\n", arr[2]);
 
-  arr[2] = 100;
+  unsigned long maximum = 0;
 
-  printf("The third element is %d. \n", arr[2]);
-  
+  int arr[] = {10,20,4,100,1000};
 
+  for(int i =0; i < 5; i++){
+    if(maximum < arr[i]){
+      maximum = arr[i];
+    }
+  }
+  printf("this is the max %d.\n", maximum);
 }
 
