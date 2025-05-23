@@ -7,9 +7,9 @@ int main(){
 
   int arr[] = {10,20,4,100,1000};
 
-  for(int i =0; i < 5; i++){
-    if(maximum < arr[i]){
-      maximum = arr[i];
+  for(int val: arr){
+    if(maximum < val){
+      maximum = val;
     }
   }
   printf("this is the max %d.\n", maximum);
