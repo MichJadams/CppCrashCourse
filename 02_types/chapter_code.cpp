@@ -1,13 +1,20 @@
 #include <cstdio>
-
+#include <cstddef>
 
 int main(){
-  bool t = true;
-  bool f = false;
-  printf("!true %d\n", !t);
-  printf("true && false: %d\n", t && f);
-  printf("true && !false: %d\n", t && !f);
-  printf("true || false: %d\n", t || f);
-  printf("false || true: %d\n", f || t);
+  size_t size_c = sizeof(char);
+  printf("char: %zu\n", size_c);
+
+  size_t size_s = sizeof(short);
+  printf("short: %zu\n", size_s);
+
+  size_t size_i = sizeof(int);
+  printf("int: %zu\n", size_i);
+
+  size_t size_l = sizeof(long);
+  printf("long: %zu\n", size_l);
+
+  size_t size_ll = sizeof(long long);
+  printf("long long: %zu\n", size_ll);
 }
 
