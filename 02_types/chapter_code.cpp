@@ -1,36 +1,42 @@
 #include <cstdio>
 #include <cstddef>
+#include <cstdint>
 
-struct ClockOfTheLongNow {
-
-  ClockOfTheLongNow(int year_in){
-    if(!set_year(year_in)){
-      year = 2019;
-    }
-  }
-
-  void add_year(){
-    year++;
-  }
-
-  bool set_year(int new_year){
-    if(new_year < 2019) return false;
-    year = new_year;
-    return true;
-  }
-  
-  int get_year(){
-    return year;
-  }
-private:   
-  int year;
+struct PodStruct {
+  uint64_t a;
+  char b[256];
+  bool c;
 };
-
 
 int main(){
 
-  ClockOfTheLongNow clock {2020}; 
+  // Initializing a fundamental Type to Zero
 
-  printf("year %d\n", clock.get_year());
+  int a = 0;
+  int b{};
+  int c = {};
+  int d;
+
+  // Initializing a fundamental type to an arbitrary value
+
+  int e = 42;
+  int f{42};
+  int g = {42};
+  int h(42); // this one is crazy 
+
+
+  // Initializing PODS
+
+  PodStruct pod1{};
+  PodStruct pod2 = {};
+  PodStruct pod3 {42, "hello"};
+  PodStruct pod4{42, "hello", true};
+
+  PodStruct items[] = {pod1, pod2, pod3, pod4};
+  
+  for(PodStruct item : items){
+    printf("a: %d b: %s c: %d \n", item.a, item.b, item.c);
+  }
+
 }
 
