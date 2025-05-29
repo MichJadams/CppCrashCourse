@@ -2,6 +2,11 @@
 #include <cstddef>
 
 struct ClockOfTheLongNow {
+
+  ClockOfTheLongNow(){
+    year = 2019;
+  }
+
   void add_year(){
     year++;
   }
@@ -23,12 +28,7 @@ private:
 int main(){
 
   ClockOfTheLongNow clock;
-  if(!clock.set_year(2018)){
-    clock.set_year(2019);
-  }
-      
- 
-  clock.add_year();
+
   printf("year %d\n", clock.get_year());
 }
 
