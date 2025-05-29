@@ -1,69 +1,28 @@
 #include <cstdio>
-#include <cstddef>
-#include <cstdint>
 
-struct PodStruct {
-  uint64_t a;
-  char b[256];
-  bool c;
-};
+struct John{
+  bool gold = true;
+  int year_of_smelting_accident{1970};
 
-struct Taxonomist{
-  Taxonomist(){
-    printf("No argument\n");
-  }
-  Taxonomist(char c){
-    printf("char %c\n", c);
-  }
-  Taxonomist(int i){
-    printf("int :d\n", i);
-  }
-  Taxonomist(float f){
-    printf("float %f\n", f);
-  }
+  // interesting I cannot do this
+  // I have to specify the length of the char array it seems
+  char key_location[] = "x-rated";
+  // cannot do
+  // int year(10); 
+
 };
 
 int main(){
 
-  // Initializing a fundamental Type to Zero
+  John john;
+  printf("location %s", john.key_location);
+  float a = {1};
+  float b = {2};
 
-  int a = 0;
-  int b{};
-  int c = {};
-  int d;
-
-  // Initializing a fundamental type to an arbitrary value
-
-  int e = 42;
-  int f{42};
-  int g = {42};
-  int h(42); // this one is crazy 
-
-
-  // Initializing PODS
-
-  PodStruct pod1{};
-  PodStruct pod2 = {};
-  PodStruct pod3 {42, "hello"};
-  PodStruct pod4{42, "hello", true};
-
-  // Initializing Arrays
-
-  int arr1[]{1,2,3};
-  int arr2[5]{};
-  int arr3[5]{1,2,3};
-  int arr4[5];
-
-  // Fully Featured Classes
-
-  Taxonomist t1;
-  Taxonomist t2{'c'};
-  Taxonomist t3{65537};
-  Taxonomist t4{6.02f};
-  Taxonomist t5('g');
-  Taxonomist t6 = {'l'};
-  Taxonomist t7{};
-  //Taxonomist t8();
-  
+  // to me this looks like a function call
+  // and I kept searching in the book as to why the
+  // narrowed_result function was never defined
+  int narrowed_result(a/b); // silent
+  int result{a/b}; // warning 
 }
 
