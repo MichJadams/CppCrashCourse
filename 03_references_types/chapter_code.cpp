@@ -1,10 +1,14 @@
 #include <cstdio>
 
 int main(){
-  int gettysburg{10};
-  printf("gettsyburg: %d\n", gettysburg);
-  int *gettysburg_address = &gettysburg;
-  printf("&gettysburg: %p\n", gettysburg_address);
 
+  int gettysburg{};
+  int* gettysburg_address = &gettysburg;
+  printf("Value at gettysburg_address: %d\n", *gettysburg_address);
+  printf("Gettysburg Address: %p\n", gettysburg_address);
+
+  *gettysburg_address = 17325e10;
+  printf("value at gettysburg_address: %d\n", *gettysburg_address);
+  printf("Gettysburg Address: %p\n", gettysburg_address);
 }
 
