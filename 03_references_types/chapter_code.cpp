@@ -1,21 +1,29 @@
 #include <cstdio>
-
-struct College
+struct ClockOfTheLongNow
 {
-  char name[256];
+  int get_year()
+  {
+    return year;
+  }
+
+  void set_year(int val)
+  {
+    year = val;
+  }
+
+private:
+  int year = 10;
 };
 
-void print_names(College *colleges, size_t n_colleges)
+void add_year(ClockOfTheLongNow& clock)
 {
-  for (int i = 0; i < n_colleges; i++)
-  {
-    College* college = colleges + i;
-    printf("%s\n", college->name);
-  };
+  clock.set_year(clock.get_year() + 1);
 }
-
 int main()
 {
-  College best_colleges[]{"Princeton", "University", "other", "No college"};
-  print_names(best_colleges, sizeof(best_colleges)/sizeof(College));
+
+  ClockOfTheLongNow clock;
+  printf("The year is %d \n", clock.get_year());
+  add_year(clock);
+  printf("The year is %d\n", clock.get_year());
 }
