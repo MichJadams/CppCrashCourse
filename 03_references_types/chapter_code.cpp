@@ -1,14 +1,23 @@
 #include <cstdio>
 
+struct ClockOfTheLongNow{
+  ClockOfTheLongNow(){}
+  ClockOfTheLongNow(int year): year{year}{}
+  int get_year() {
+    return year;
+  }
+  void set_year(int year) {
+      this->year = year;
+  }
+private:
+  int year;
+};
+
 int main(){
-
-  int gettysburg{};
-  int* gettysburg_address = &gettysburg;
-  printf("Value at gettysburg_address: %d\n", *gettysburg_address);
-  printf("Gettysburg Address: %p\n", gettysburg_address);
-
-  *gettysburg_address = 17325e10;
-  printf("value at gettysburg_address: %d\n", *gettysburg_address);
-  printf("Gettysburg Address: %p\n", gettysburg_address);
+  ClockOfTheLongNow clock;
+  ClockOfTheLongNow* clock_ptr = &clock;
+  clock_ptr->set_year(2022);
+  printf("address of the clock: %p\n", clock_ptr);
+  printf("Value of clock's year: %d", clock_ptr->get_year());
 }
 
