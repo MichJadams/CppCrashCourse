@@ -37,6 +37,7 @@ void print_linked_list(Element *starting_element)
 
 struct ClockOfTheLongNow
 {
+  
   int get_year() const
   {
     return year;
@@ -48,21 +49,23 @@ struct ClockOfTheLongNow
       
   int year{10};
 };
+
 struct Avout {
+  Avout(const char* name, long year_of_apert) :
+    name {name}, apert {year_of_apert} {}
+					   
   const char* name = "Erasmas";
   ClockOfTheLongNow apert;
+  
 };
-void does_not_compile(const Avout& avout)
-{
-  avout.apert.add_year();
-}
+
+
   
 int main()
 {
 
-  ClockOfTheLongNow clock{};
-  int year = clock.get_year();
+  Avout raz{"name here", 78493};
 
-  printf("The year: %d", year);
+  printf("The year: %d", raz.apert);
 
 }
