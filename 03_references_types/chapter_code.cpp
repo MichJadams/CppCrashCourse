@@ -1,29 +1,46 @@
 #include <cstdio>
-struct ClockOfTheLongNow
+#include <cstring>
+
+struct Element
 {
-  int get_year()
+  Element(const char *pfx, short operating_number) : operating_number{operating_number}
   {
-    return year;
+    strncpy(prefix, pfx, sizeof(prefix));
+    prefix[sizeof(prefix) - 1] = '\0';
   }
 
-  void set_year(int val)
-  {
-    year = val;
-  }
+  Element *next{};
+  char prefix[2];
+  short operating_number;
 
-private:
-  int year = 10;
+  void insert_after(Element *new_elemenet)
+  {
+    new_elemenet->next = next;
+    next = new_elemenet;
+  }
 };
 
-void add_year(ClockOfTheLongNow& clock)
+void print_linked_list(Element *starting_element)
 {
-  clock.set_year(clock.get_year() + 1);
+  printf("here?");
+  Element *current_element = starting_element;
+  printf("here %s", (*current_element).next);
+  while (current_element)
+  {
+    printf("Element prefix: %d, elemenet operating number %d \n", current_element->prefix, current_element->operating_number);
+    current_element = current_element->next;
+  }
 }
+
 int main()
 {
+  Element one{"h", 10};
+  Element two{"hi", 20};
+  Element three{"no", 30};
 
-  ClockOfTheLongNow clock;
-  printf("The year is %d \n", clock.get_year());
-  add_year(clock);
-  printf("The year is %d\n", clock.get_year());
+  one.insert_after(&two);
+  two.insert_after(&three);
+
+  print_linked_list(&one);
+
 }
