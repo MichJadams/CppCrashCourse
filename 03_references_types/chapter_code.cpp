@@ -13,6 +13,11 @@ struct Element
   char prefix[2];
   short operating_number;
 
+  const char* get_prefix() const
+  {
+    return prefix;
+  }
+
   void insert_after(Element *new_elemenet)
   {
     new_elemenet->next = next;
@@ -22,32 +27,18 @@ struct Element
 
 void print_linked_list(Element *starting_element)
 {
-  printf("here?");
-  Element *current_element = starting_element;
-  printf("here %s", (*current_element).next);
-  while (current_element)
+    Element *current_element = starting_element;
+    while (current_element)
   {
-    printf("Element prefix: %d, elemenet operating number %d \n", current_element->prefix, current_element->operating_number);
+    printf("Element prefix: %s, elemenet operating number %d \n", current_element->get_prefix(), current_element->operating_number);
     current_element = current_element->next;
   }
 }
 
 int main()
 {
-  int original = 100;
-  int& original_ref = original;
-  printf("original: %d\n", original);
-  printf("Reference: %d\n", original_ref);
 
-  int new_value = 200;
-  original_ref = new_value;
-  
-  // This is the weird part. Original gets the changes that were
-  // propagated back up by chaning the reference to original.
-  // maybe kinda like unions? at least in my head.
-  printf("Original: %d\n", original);
-  
-  printf("New Value: %d\n", new_value);
-  printf("Reference: %d\n" original_ref); 
+  Element one{"i", 10};
+  print_linked_list(&one);
 
 }
