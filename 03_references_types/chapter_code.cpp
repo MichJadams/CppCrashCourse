@@ -34,13 +34,20 @@ void print_linked_list(Element *starting_element)
 
 int main()
 {
-  Element one{"h", 10};
-  Element two{"hi", 20};
-  Element three{"no", 30};
+  int original = 100;
+  int& original_ref = original;
+  printf("original: %d\n", original);
+  printf("Reference: %d\n", original_ref);
 
-  one.insert_after(&two);
-  two.insert_after(&three);
-
-  print_linked_list(&one);
+  int new_value = 200;
+  original_ref = new_value;
+  
+  // This is the weird part. Original gets the changes that were
+  // propagated back up by chaning the reference to original.
+  // maybe kinda like unions? at least in my head.
+  printf("Original: %d\n", original);
+  
+  printf("New Value: %d\n", new_value);
+  printf("Reference: %d\n" original_ref); 
 
 }
