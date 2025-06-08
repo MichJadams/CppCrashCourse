@@ -2,44 +2,62 @@
 #include <exception>
 
 // Read about CVE-2001-0500
-// 3-2 add a read_from and a write_to function to listing 3-6.
+// 3-3 add a previous to the linked list making it a doubly linked list
+// and add an insert_before to element
+// traverse the list back and forth using two seperate for loops 
 
-void write_to(char* str, char letter_to_insert,  int index)
+struct Element
 {
-  if(index < sizeof(str))
+  int data; 
+  void insert_after(Element* next_element)
   {
-    str[index] = letter_to_insert;
-   
-  } else
-    {
-      throw std::exception();
-    }
-}
+    next_element->next = next; 
+    next = next_element;
+    next_element->previous = this;
+   }
 
-char read_from(char* string, int index)
+  void insert_before(Element* new_element)
+  {
+    new_element->previous = previous;
+    previous = new_element;
+    new_element->next = this;
+    
+  }
+  Element* next;
+  Element* previous;
+  
+};
+
+void print_linked_list_forward(Element* start)
 {
-  if(index < sizeof(string)/sizeof(char))
+  Element* current_element = start;
+  while(current_element)
     {
-      return string[index];
+      printf("element data: %d\n", current_element->data);
+      current_element = current_element->next;
     }
-  else
+};
+
+void print_linked_list_backward(Element* end)
+{
+  Element* current_element = end;
+  while(current_element)
     {
-      return '\0';
+      printf("Element data: %d\n", current_element->data);
+      current_element = current_element->previous;
     }
+  
 }
 
 int main()
 {
-  char lower[] = "abc?e";
-  char upper[] = "ABC?E";
+  Element one{10};
+  Element two{20};
+  Element three{30};
 
-  char* upper_ptr = upper;
+  one.insert_after(&two);
+  two.insert_after(&three);
 
-  write_to(lower, 'd', 3);
-  write_to(upper, 'D', 3);
- 
-  char letter_d = read_from(lower, 3);;
-  char letter_D = read_from(upper, 3);;
-
-  printf("This is string one: %s\nThis is string two %s\n", lower, upper);
+  print_linked_list_forward(&one);
+  print_linked_list_backward(&three);
 }
