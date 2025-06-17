@@ -1,28 +1,34 @@
 #include <cstdio>
 
-struct RatThing {
-  static int rat_things_power;
-
-  static void power_up_rat_thing(int nuclear_isotopes)
+struct Tracer
+{
+  Tracer(const char* name) :name {name}
   {
-    rat_things_power = rat_things_power + nuclear_isotopes;
-
-    const auto waste_heat = rat_things_power * 20;
-    if(waste_heat > 10000)
-      {
-	printf("warning, hot doggie! \n");
-      }
-    printf("rat things power %d\n", rat_things_power);
+    printf("%s constructed.\n", name);
   }
-};
-  int RatThing::rat_things_power = 200;
 
+  ~Tracer()
+  {
+    printf("%s destructed.\n", name);
+  }
+
+private:
+  const char * const name; //so many consts
+};
+
+  static Tracer t1 { "static variable" };
+thread_local Tracer t2{ "thread-local variable"};
+
+  
 int main()
 {
- 
-  RatThing:: power_up_rat_thing(100);
- 
-  RatThing::power_up_rat_thing(500);
+  const auto t2_ptr = &t2;
+  printf("A\n");
+  Tracer t3{"Automatic variable" };
+  printf("B\n");
+  const auto* t4 = new Tracer{"Dynamic variable"};
+  // no delete called here, so memory from t4 is leaked!
+  printf("C\n"); 
  
 }
 	 
