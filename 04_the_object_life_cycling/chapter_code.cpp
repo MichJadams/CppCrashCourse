@@ -1,4 +1,5 @@
 #include <cstdio>
+#include <utility>
 
 struct Point
 {
@@ -46,7 +47,7 @@ int main()
 {
 
   auto x = 1;
-  ref_type(x);
+  ref_type(std::move(x)); // no clue why you would ever want to do this?
   ref_type(2);
   ref_type(x+2);
   
