@@ -7,7 +7,19 @@ struct Point
   // the addition of this single line below completely
   // changes the behavior of the make_transpose function
   // below!!!!
-  Point(int x, int y): x{x}, y{x} {} 
+  Point(int x, int y): x{x}, y{x} {}
+
+  // and then adding this means that it goes back to
+  // behaving like a fundamental type or a POD!
+  Point(const Point& other)
+  {
+    x = 10;
+    y = 100;
+    printf("----\n");
+    //    other.Print();
+    printf("X: %d, Y: %d\n", other.x, other.y);
+       printf("----\n");
+  }
   void Print()
   {
     printf("X: %d, Y: %d\n", x, y);
