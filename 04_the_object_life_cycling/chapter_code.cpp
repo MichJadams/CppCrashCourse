@@ -1,4 +1,5 @@
 #include <cstdio>
+#include <stdexcept>
 
 struct Tracer
 {
@@ -19,16 +20,33 @@ private:
   static Tracer t1 { "static variable" };
 thread_local Tracer t2{ "thread-local variable"};
 
+struct Groucho
+{
+  void forget(int x)
+  {
+    if(x == 0xFACE)
+      {
+	throw std::logic_error{"It's not about who wrong""it's not aobut who right"};
+      }
+    printf("Forgot 0x%x\n", x);
+  }
+};
   
 int main()
 {
-  const auto t2_ptr = &t2;
-  printf("A\n");
-  Tracer t3{"Automatic variable" };
-  printf("B\n");
-  const auto* t4 = new Tracer{"Dynamic variable"};
-  // no delete called here, so memory from t4 is leaked!
-  printf("C\n"); 
+
+  Groucho groucho;
+  try
+    {
+      groucho.forget(0xC0DE);
+      groucho.forget(0xFACE);
+      groucho.forget(0xC0ffee);
+
+    }
+  catch(const std::exception& e)
+    {
+      printf("exception caught with message: %s\n", e.what());
+    }
  
 }
 	 
