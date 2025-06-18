@@ -4,9 +4,8 @@ struct Point
 {
   int x, y;
 
-  // if you want to ensure no copying of a class! 
-  Point(const Point&) = delete;
-  Point& operator=(const Point&) = delete; 
+  
+  Point(const Point&) = default;
   
   Point(int x, int y): x{x}, y{y} {}
 
@@ -16,7 +15,15 @@ struct Point
   }
 };
 
-Point make_transpose(Point p)
+struct PointOwner
+{
+  PointOwner(const Point& my_point) : point{my_point}{}
+
+public:
+  Point point;
+
+};
+Point make_transpose(Point& p)
 {
   
   int tmp = p.x;
@@ -25,22 +32,23 @@ Point make_transpose(Point p)
   return p;
 }
 
-int add_one_to(int x)
+void ref_type(int &x)
 {
-  x++;
-  return x;
+  printf("lvalue reference %d\n", x);
+}
+
+void ref_type(int &&x)
+{
+  printf("rvalue reference %d\n", x);
 }
 
 int main()
 {
-  Point p1{1,3};
-  Point p2{5,6};
 
-  p2 = p1; // Now this throws an error of "use of deleted function"
-  
-
-  p1.Print();
-  p2.Print();
+  auto x = 1;
+  ref_type(x);
+  ref_type(2);
+  ref_type(x+2);
   
 }
 	 
