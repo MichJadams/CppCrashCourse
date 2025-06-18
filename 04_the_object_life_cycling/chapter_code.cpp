@@ -77,6 +77,20 @@ private:
   int length;
   char* buffer;
 };
+
+struct SimpleStringOwner
+{
+  SimeplStringOwner(const char* x): string{10}
+  {
+    string.append_line(x);
+  }
+  ~SimpleStringOwner()
+  {
+    string.print("about to destroy");
+  }
+private:
+  SimpleString string; 
+};
 int main()
 {
 
