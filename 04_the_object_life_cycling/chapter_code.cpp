@@ -1,3 +1,4 @@
+
 #include <cstdio>
 #include <stdexcept>
 
@@ -32,28 +33,32 @@ struct Groucho
   }
 };
 
-void ops() noexcept
+struct CyberdyneSeries800
 {
-  throw std::runtime_error {"Goodbye, cruel world!"};
-}
+  CyberdyneSeries800()
+  {
+    printf("I'm a friend of sarah connor.");
+  }
+
+  ~CyberdyneSeries800()
+  {
+    throw std::runtime_error{"I'll be back!"};
+  }
+
+};
 
 int main()
 {
+try
+  {
+    CyberdyneSeries800 t800;
+    throw std::runtime_error{"on no, we created a monster!"};
+  } catch(const std::exception& e)
+  {
+    printf("Caught exception: %s\n", e.what());
+  }
 
 
-  Groucho groucho;
-  try
-    {
-        ops();
-      groucho.forget(0xC0DE);
-      groucho.forget(0xFACE);
-      groucho.forget(0xC0ffee);
-
-    }
-  catch(const std::exception& e)
-    {
-      printf("exception caught with message: %s\n", e.what());
-    }
  
 }
 	 

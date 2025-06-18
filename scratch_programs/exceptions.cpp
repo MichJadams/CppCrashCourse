@@ -19,3 +19,5 @@ int main(){
   with_except();
   with_no_except();
 }
+// I compiled this with
+// g++ -O2 -S -masm=intel -fno-asynchronous-unwind-tables exceptions.cpp
