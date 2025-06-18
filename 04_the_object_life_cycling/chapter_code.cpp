@@ -7,7 +7,7 @@ struct Point
   // the addition of this single line below completely
   // changes the behavior of the make_transpose function
   // below!!!!
-  Point(int x, int y): x{x}, y{x} {}
+  Point(int x, int y): x{x}, y{y} {}
 
   // and then adding this means that it goes back to
   // behaving like a fundamental type or a POD!
@@ -44,7 +44,10 @@ int add_one_to(int x)
 int main()
 {
   Point p1{1,3};
-  auto p2 = make_transpose(p1);
+  Point p2{5,6};
+
+  p2 = p1; // another way to copy things....
+  
 
   p1.Print();
   p2.Print();
