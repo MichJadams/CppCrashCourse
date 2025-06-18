@@ -3,6 +3,11 @@
 struct Point
 {
   int x, y;
+  
+  // the addition of this single line below completely
+  // changes the behavior of the make_transpose function
+  // below!!!!
+  Point(int x, int y): x{x}, y{x} {} 
   void Print()
   {
     printf("X: %d, Y: %d\n", x, y);
