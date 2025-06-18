@@ -1,7 +1,8 @@
 
 #include <cstdio>
 #include <stdexcept>
-
+#include <cstdio>
+#include <cstring>
 struct Tracer
 {
   Tracer(const char* name) :name {name}
@@ -47,18 +48,43 @@ struct CyberdyneSeries800
 
 };
 
-int main()
+
+struct SimpleString
 {
-try
+  SimpleString(int max_size): max_size{max_size}, length{}
   {
-    CyberdyneSeries800 t800;
-    throw std::runtime_error{"on no, we created a monster!"};
-  } catch(const std::exception& e)
-  {
-    printf("Caught exception: %s\n", e.what());
+    buffer = new char[max_size];
+    buffer[0] = 0; 
   }
 
+  void append_line(const char* x)
+  {
+    int x_len = strlen(x);
+    std::strncpy(buffer + length, x, max_size - length);
+    length += x_len;
+    buffer[length++] = '\n';
+    buffer[length] = 0; 
 
+  }
+
+  void print()
+  {
+    printf("%s", buffer);
+  }
+
+private:
+  int max_size;
+  int length;
+  char* buffer;
+};
+int main()
+{
+
+  SimpleString string {115};
+  string.append_line("hey!");
+  string.append_line("nothing but the rain");
+  string.print();
+		
  
 }
 	 
