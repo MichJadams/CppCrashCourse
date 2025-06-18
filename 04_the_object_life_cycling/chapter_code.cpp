@@ -31,13 +31,20 @@ struct Groucho
     printf("Forgot 0x%x\n", x);
   }
 };
-  
+
+void ops() noexcept
+{
+  throw std::runtime_error {"Goodbye, cruel world!"};
+}
+
 int main()
 {
+
 
   Groucho groucho;
   try
     {
+        ops();
       groucho.forget(0xC0DE);
       groucho.forget(0xFACE);
       groucho.forget(0xC0ffee);
