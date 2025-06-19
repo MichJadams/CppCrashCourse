@@ -59,7 +59,6 @@ struct Avout {
   
 };
 
-
   
 int main()
 {
