@@ -7,6 +7,7 @@ struct Point
 
   
   Point(const Point&) = default;
+  Point(Point&& other): x{other.x}, y{other.y}{}
   
   Point(int x, int y): x{x}, y{y} {}
 
