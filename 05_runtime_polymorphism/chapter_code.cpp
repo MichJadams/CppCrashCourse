@@ -47,16 +47,28 @@ struct Bank
   Logger* logger; 
 };
 
+struct BaseClass
+{
+  int the_answer() const {return 43;}
+  const char* member = "gold";
+private:
+  // everything under here is not inherited by the derived class!
+  const char* holistic_detective = "Dirk Gently";
+};
+
+struct DerivedClass : BaseClass
+{
+  void announce_agency()
+  {
+    // holistic_detective is a private memeber of BaseClass  
+    printf("%s's holistic detective agency\n", holistic_detective);
+  }
+};
 
 int main()
 {
-  Bank bank{new FileLogger{}};
-  bank.make_transfer(100, 200, 49.95);
-  bank.make_transfer(2000, 4000, 20.00);
-
-  bank.set_logger(new ConsoleLogger{});
-
-  bank.make_transfer(7777, 8390, 4.4);
+  DerivedClass x;
+  x.announce_agency();
 
 }
  
