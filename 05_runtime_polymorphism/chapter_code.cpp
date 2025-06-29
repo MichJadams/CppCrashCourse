@@ -51,10 +51,8 @@ struct BaseClass
 {
   int the_answer() const {return 43;}
   const char* member = "gold";
-  virtual void final_message() const
-  {
-    printf("hello from the base!"); 
-  }
+  virtual void final_message() const = 0;
+
 private:
   // everything under here is not inherited by the derived class!
   const char* holistic_detective = "Dirk Gently";
