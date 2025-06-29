@@ -34,53 +34,23 @@ struct FileLogger : Logger
 
 struct Bank
 {
-  Bank(Logger* logger): logger { logger }{}
+  Bank(Logger& logger): logger { logger }{}
 
-  void set_logger(Logger* new_logger)
+  void set_logger(Logger& new_logger)
   {
     logger = new_logger;
   }
   void make_transfer(long from, long to, double amount)
   {
-    logger->log_transfer(from, to, amount);
+    logger.log_transfer(from, to, amount);
   }
-  Logger* logger; 
-};
-
-struct BaseClass
-{
-  ~BaseClass()
-  {
-    printf("called the base class deconstructor");
-  }
-};
-
-struct DerivedClass : BaseClass
-{
-  char* leaked= nullptr;
-  DerivedClass()
-  {
-    printf("DerivedClass() invoked \n");
-    leaked = new char[100]; 
-  }
-
-  ~DerivedClass()
-  {
-    delete leaked;
-    printf("~DerivedClass() invokved. \n");
-  }
-
+  Logger& logger; 
 };
 
 int main()
 {
-  // this code is allocating a new DerivedClass and setting a baseclss pointer to
-  // point to it.
-  // I have to think about this a lot. But its really interesting! 
-  BaseClass* x { new DerivedClass{} };
-  printf("deleted x as a baseclass*.\n");
-  delete x;
-  // because here the compiler is callsing the BaseClass
-  // deconstructor, it does not call the derivedClass deconstructor! 
+  ConsoleLogger logger; 
+  Bank bank{ logger };
+  bank.make_transfer(100,200, 49.5); 
 }
  
