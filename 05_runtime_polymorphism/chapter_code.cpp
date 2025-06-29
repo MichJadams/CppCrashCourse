@@ -1,72 +1,60 @@
 #include <cstdio>
 #include <stdexcept>
 
-struct ConsoleLogger
+struct Logger
 {
-  static void log_transfer(long from, long to, double amount)
+  virtual ~Logger() = default;
+  // =0 forces log_transfer to be defined 
+  virtual void log_transfer(long from, long to, double amount) = 0; 
+};
+
+struct ConsoleLogger : Logger
+{
+  void log_transfer(long from, long to, double amount) override
   {
-    printf("%ld -> %ld: %f\n", from, to, amount);
+    printf("[console] %ld -> %ld: %f\n", from, to, amount);
 
   }
 };
 
-
-
 enum class LoggerType
   {
-   Console,
-   File
+    Console,
+    File
   };
 
 
-struct FileLogger
+struct FileLogger : Logger
 {
-  static void log_transfer(long from, long to, double amount)
+  void log_transfer(long from, long to, double amount) override
   {
-    printf("[cons] %ld -> %ld: %f\n", from, to, amount);
+    printf("[file] %ld -> %ld: %f\n", from, to, amount);
   }
 };
 
 struct Bank
 {
-  Bank(): type { LoggerType::Console }{}
+  Bank(Logger* logger): logger { logger }{}
 
-  void set_logger(LoggerType new_type)
+  void set_logger(Logger* new_logger)
   {
-    type = new_type;
+    logger = new_logger;
   }
   void make_transfer(long from, long to, double amount)
   {
-    switch(type)
-      {
-      case(LoggerType::File) :
-	{
-	  FileLogger::log_transfer(from, to, amount);
-	  break;
-      	}
-      case(LoggerType::Console) :
-	{
-	  ConsoleLogger::log_transfer(from, to, amount);
-	  break;
-	}
-      default:
-	{
-	  throw std::logic_error("Unknown logger type");
-	}
-			  
-      };
+    logger->log_transfer(from, to, amount);
   }
-  LoggerType type; 
+  Logger* logger; 
 };
 
 
 int main()
 {
-  Bank bank;
+  Bank bank{new FileLogger{}};
   bank.make_transfer(100, 200, 49.95);
   bank.make_transfer(2000, 4000, 20.00);
 
-  bank.set_logger(LoggerType::File);
+  bank.set_logger(new ConsoleLogger{});
 
   bank.make_transfer(7777, 8390, 4.4);
 
