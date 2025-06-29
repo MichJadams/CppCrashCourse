@@ -51,6 +51,10 @@ struct BaseClass
 {
   int the_answer() const {return 43;}
   const char* member = "gold";
+  virtual void final_message() const
+  {
+    printf("hello from the base!"); 
+  }
 private:
   // everything under here is not inherited by the derived class!
   const char* holistic_detective = "Dirk Gently";
@@ -58,17 +62,21 @@ private:
 
 struct DerivedClass : BaseClass
 {
-  void announce_agency()
+  void final_message() const override
   {
-    // holistic_detective is a private memeber of BaseClass  
-    printf("%s's holistic detective agency\n", holistic_detective);
+    printf("hello from the derived class!");
   }
 };
 
 int main()
 {
-  DerivedClass x;
-  x.announce_agency();
+  BaseClass base;
+  DerivedClass derived;
+  BaseClass& ref = derived;
+
+  base.final_message();
+  derived.final_message();
+  ref.final_message(); 
 
 }
  

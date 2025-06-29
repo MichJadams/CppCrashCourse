@@ -1,2 +1,7 @@
 01_up_and_running/build/
 02_types/build/
+03_references_types/build/
+.#* 
+.vscode 
+.vs
+.idea
