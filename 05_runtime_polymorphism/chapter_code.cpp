@@ -49,32 +49,38 @@ struct Bank
 
 struct BaseClass
 {
-  int the_answer() const {return 43;}
-  const char* member = "gold";
-  virtual void final_message() const = 0;
-
-private:
-  // everything under here is not inherited by the derived class!
-  const char* holistic_detective = "Dirk Gently";
+  ~BaseClass()
+  {
+    printf("called the base class deconstructor");
+  }
 };
 
 struct DerivedClass : BaseClass
 {
-  void final_message() const override
+  char* leaked= nullptr;
+  DerivedClass()
   {
-    printf("hello from the derived class!");
+    printf("DerivedClass() invoked \n");
+    leaked = new char[100]; 
   }
+
+  ~DerivedClass()
+  {
+    delete leaked;
+    printf("~DerivedClass() invokved. \n");
+  }
+
 };
 
 int main()
 {
-  BaseClass base;
-  DerivedClass derived;
-  BaseClass& ref = derived;
-
-  base.final_message();
-  derived.final_message();
-  ref.final_message(); 
-
+  // this code is allocating a new DerivedClass and setting a baseclss pointer to
+  // point to it.
+  // I have to think about this a lot. But its really interesting! 
+  BaseClass* x { new DerivedClass{} };
+  printf("deleted x as a baseclass*.\n");
+  delete x;
+  // because here the compiler is callsing the BaseClass
+  // deconstructor, it does not call the derivedClass deconstructor! 
 }
  
