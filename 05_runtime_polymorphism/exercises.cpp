@@ -73,13 +73,28 @@ private:
   Account** accounts; // do not understand double **
 };
 
+struct Bank
+{
+  Bank(AccountDatabase& database): database{database}{};
+  void new_customer(float amount)
+  {
+    // I kinda forget why this is a dot operator
+    // and not an arrow operator ... because database is a reference? not a pointer?
+    
+    database.add_new_account(100, amount);
+  }
+  void are_we_rich()
+  {
+    database.print_balances();
+  }
+private:
+  AccountDatabase& database; 
+};
 
 int main()
 {
-  long id{100};
-  InMemoryAccountDatabase bse{10};
-  bse.add_new_account(id, 9403.54);
-  bse.print_balances();
-  bse.add_money(id, 100000);
-  bse.print_balances(); 
+  InMemoryAccountDatabase base{10};
+  Bank bank{base};
+  bank.new_customer(100000);
+  bank.are_we_rich(); 
 }
