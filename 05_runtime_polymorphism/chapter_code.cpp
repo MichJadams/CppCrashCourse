@@ -10,11 +10,15 @@ struct Logger
 
 struct ConsoleLogger : Logger
 {
+  ConsoleLogger(const char* tag): tag{tag}{};
+  
   void log_transfer(long from, long to, double amount) override
   {
-    printf("[console] %ld -> %ld: %f\n", from, to, amount);
+    printf("[%s] %ld -> %ld: %f\n",tag, from, to, amount);
 
   }
+private:
+  const char* tag;
 };
 
 enum class LoggerType
@@ -49,7 +53,7 @@ struct Bank
 
 int main()
 {
-  ConsoleLogger logger; 
+  ConsoleLogger logger{"special"}; 
   Bank bank{ logger };
   bank.make_transfer(100,200, 49.5); 
 }
