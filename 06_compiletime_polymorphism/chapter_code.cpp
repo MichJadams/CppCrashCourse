@@ -1,15 +1,27 @@
 #include <cstdio>
+#include <stdexcept>
 
-short increment_as_short(void* target)
+
+template<typename To, typename From>
+To narrow_cast(From value)
 {
-  auto as_short = static_cast<short*>(target);
-  *as_short = *as_short + 1;
-  return *as_short;
+  const auto converted = static_cast<To>(value);
+  const auto backwards = static_cast<From>(converted);
+  if( value != backwards) throw std::runtime_error{ "narrowed!"};
+  return converted;
 }
 
 int main()
 {
-  auto timer = reinterpret_cast<const unsigned long*>(0x1000);
-  printf("Timer is %lu", *timer);
-
+  int perfect {496};
+  const auto perfect_short = narrow_cast<short>(perfect); 
+  try
+    {
+      int cyclib {142857};
+      const auto cyclib_short = narrow_cast<short>(cyclib);
+    }
+  catch(std::runtime_error& e)
+    {
+      printf("Error: %s", e.what());
+    }
 }
