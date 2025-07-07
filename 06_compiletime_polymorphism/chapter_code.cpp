@@ -1,15 +1,16 @@
 #include <cstdio>
 
-template <typename x, typename y, typename z>
-struct MyTemplateClass
+short increment_as_short(void* target)
 {
-  x foo(&Y);
-private:
-  Z* member;
+  auto as_short = static_cast<short*>(target);
+  *as_short = *as_short + 1;
+  return *as_short;
 }
-
 
 int main()
 {
-  printf("hello world\n");
+  short beast {665 };
+  auto mark_of_the_beast = increment_as_short(&beast);
+  printf("%d is the mark_fo_the_beast.", mark_of_the_beast);
+
 }
