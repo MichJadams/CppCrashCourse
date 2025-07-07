@@ -9,8 +9,7 @@ short increment_as_short(void* target)
 
 int main()
 {
-  short beast {665 };
-  auto mark_of_the_beast = increment_as_short(&beast);
-  printf("%d is the mark_fo_the_beast.", mark_of_the_beast);
+  auto timer = reinterpret_cast<const unsigned long*>(0x1000);
+  printf("Timer is %lu", *timer);
 
 }
