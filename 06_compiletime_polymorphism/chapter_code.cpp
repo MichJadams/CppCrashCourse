@@ -1,11 +1,12 @@
 #include <cstdio>
+#include <utility>
 
 template<typename T> 
 struct SimpleUniquePointer
 {
   SimpleUniquePointer() = default;
   SimpleUniquePointer(T* pointer): pointer{pointer}{}
-  ~simpleUniquePointer()
+  ~SimpleUniquePointer()
   {
     if(pointer) delete pointer;
   }
@@ -16,7 +17,7 @@ struct SimpleUniquePointer
 
   // make the move constructor remove the pointer from
   // the original 
-  SimeplUniquePointer(SimpleUniquePointer&& other) noexcept
+  SimpleUniquePointer(SimpleUniquePointer&& other) noexcept
     : pointer{other.pointer}
   {
     other.pointer = nullptr;
@@ -26,9 +27,13 @@ struct SimpleUniquePointer
   // remove the pointer from the original
   // and return set this instance equal to the original
   // return this
-  SimpleUniquePointer& operator=(const SimpleUniquePointer&& other) noexcpet
+  SimpleUniquePointer& operator=(SimpleUniquePointer&& other) noexcept
   {
+    // this line is really key because failure to delete this pointer
+    // leaks a resource! 
     if(pointer) delete pointer;
+
+    
     pointer = other.pointer;
     other.pointer = nullptr;
     return *this;
@@ -41,3 +46,33 @@ private:
   T* pointer;
 
 };
+
+struct Tracer
+{
+  Tracer(const char* name) : name{name}
+  {
+    printf("%s constructed \n", name);
+  }
+  ~Tracer()
+  {
+    printf("%s destucted\n", name);
+  }
+private:
+  const char* const name;
+};
+
+void consumer( SimpleUniquePointer<Tracer> consumer_ptr)
+{
+  printf("(cons) consumer_ptr: 0x%p\n", consumer_ptr.get());
+}
+
+int main()
+{
+  auto ptr_a = SimpleUniquePointer(new Tracer{ "ptr_a"});
+  printf("(main) ptr_a: 0x%p\n", ptr_a.get());
+  consumer(std::move(ptr_a));
+  printf("(main) ptr_a: 0x%p\n", ptr_a.get());
+}
+
+  
+  
