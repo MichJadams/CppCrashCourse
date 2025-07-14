@@ -1,27 +1,20 @@
 #include <cstdio>
 #include <utility> 
+#include <stdexcept>
 
-
-template<typename T>
-T mean(T* list, size_t length)
+template<typename T, size_t length>
+T& get(T(&arr)[length], size_t index)
 {
-  // I actually like this a lot 
-  static_assert(std::is_default_constructible<T>(), "type must be default constructible.");
-  static_assert(std::is_arithmetic<T>(), "type must support addition and division."); 
-  T result{};
-  for(int i{}; i< length; i++)
-    {
-      result += list[i];
-    }
-  return result / length; 
+  if( index >= length) throw std::out_of_range{ "out of bounds"};
+  return arr[index];
 }
 
 int main()
 {
-  float values[]{1,2,3,4};
-  float result = mean(values, 4);
+  float values[]{1,2,7,8,9,10};
 
-  printf("mean %f\n", result);
+
+  printf("mean %f\n", get(values, 2));
 }
 
   
