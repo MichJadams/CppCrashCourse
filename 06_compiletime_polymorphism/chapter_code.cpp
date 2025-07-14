@@ -3,21 +3,12 @@
 #include <type_traits>
 #include <concepts>
 
-
 template<typename T>
-concept Averageable = std::is_default_constructible<T>::value
-    && requires(T a, T b)
-    {
-      // this first constraint fails when working with floats
-      {a + b} -> std::same_as<T>;
-
-      // this works just fine, because it is a looser constraint
-      {a / size_t{1}} -> std::convertible_to<T>;
-    };
-
-
-
-template<Averageable T>
+requires requires(T a, T b)
+{
+  {a + b} -> std::same_as<T>;
+  {a / size_t{1}} -> std::same_as<T>;
+}
 T mean(T* list, size_t length)
 {
   T result{};
@@ -30,9 +21,7 @@ T mean(T* list, size_t length)
 
 int main()
 {
-  float val1{1};
-  float val2{3};
-  float* values[]{&val1, &val2};
+  float values[]{1,2,3,4};
   float result = mean(values, 4);
 
   printf("mean %f\n", result);
