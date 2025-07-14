@@ -1,39 +1,43 @@
 #include <cstdio>
-#include <stdexcept>
 
-
-template<typename To, typename From>
-To narrow_cast(From value)
+template<typename T> 
+struct SimpleUniquePointer
 {
-  const auto converted = static_cast<To>(value);
-  const auto backwards = static_cast<From>(converted);
-  if( value != backwards) throw std::runtime_error{ "narrowed!"};
-  return converted;
-}
+  SimpleUniquePointer() = default;
+  SimpleUniquePointer(T* pointer): pointer{pointer}{}
+  ~simpleUniquePointer()
+  {
+    if(pointer) delete pointer;
+  }
 
-template<typename V>
-V mean(const V* values, size_t length)
-{
-  V result{};
-  for(size_t i{}; i<length; i++)
-    {
-      result += values[i];
-    }
-  return result / length;
-}
+  // make the copy constructors not possible 
+  SimpleUniquePointer(const SimpleUniquePointer&) = delete;
+  SimpleUniquePointer& operator=(const SimpleUniquePointer&) = delete;
 
-int main()
-{
-  const double nums_d[] {1.0, 2.0, 3.0, 4.0};
-  const auto result1 = mean<double>(nums_d, 4);
-  printf("double: %f\n", result1);
+  // make the move constructor remove the pointer from
+  // the original 
+  SimeplUniquePointer(SimpleUniquePointer&& other) noexcept
+    : pointer{other.pointer}
+  {
+    other.pointer = nullptr;
+  }
 
-  const float nums_f[] {1.0f, 2.0f, 3.0f, 4.0f};
-  const auto result2 = mean<float>(nums_f, 4);
-  printf("float: %f\n", result2);
+  // make the move assignment operator
+  // remove the pointer from the original
+  // and return set this instance equal to the original
+  // return this
+  SimpleUniquePointer& operator=(const SimpleUniquePointer&& other) noexcpet
+  {
+    if(pointer) delete pointer;
+    pointer = other.pointer;
+    other.pointer = nullptr;
+    return *this;
+  }
+  T* get()
+  {
+    return pointer;
+  }
+private:
+  T* pointer;
 
-  const size_t nums_c[] {1,2,3,4};
-  const auto result3 = mean<size_t>(nums_c, 4);
-  printf("size_t: %zu\n", result3); // the book suggests using zu, I don't acutally know what
-  // that does ??
-}
+};
