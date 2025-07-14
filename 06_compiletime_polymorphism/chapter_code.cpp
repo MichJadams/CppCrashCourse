@@ -9,7 +9,7 @@ concept Averageable = std::is_default_constructible<T>::value
     && requires(T a, T b)
     {
       // this first constraint fails when working with floats
-      {a += b} -> std::same_as<T>;
+      {a + b} -> std::same_as<T>;
 
       // this works just fine, because it is a looser constraint
       {a / size_t{1}} -> std::convertible_to<T>;
@@ -28,12 +28,12 @@ T mean(T* list, size_t length)
   return result / length; 
 }
 
-
-
 int main()
 {
-  float test[]{1.0f,2.0f,3.0f,4.0f};
-  float result = mean(test, 4);
+  float val1{1};
+  float val2{3};
+  float* values[]{&val1, &val2};
+  float result = mean(values, 4);
 
   printf("mean %f\n", result);
 }
