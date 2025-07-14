@@ -66,12 +66,19 @@ void consumer( SimpleUniquePointer<Tracer> consumer_ptr)
   printf("(cons) consumer_ptr: 0x%p\n", consumer_ptr.get());
 }
 
+template<typename T>
+T square(T value)
+{
+  return value * value;
+}
+
 int main()
 {
-  auto ptr_a = SimpleUniquePointer(new Tracer{ "ptr_a"});
-  printf("(main) ptr_a: 0x%p\n", ptr_a.get());
-  consumer(std::move(ptr_a));
-  printf("(main) ptr_a: 0x%p\n", ptr_a.get());
+  char my_char{'T'};
+  auto result = square(my_char);
+
+  // I'm suprised this compiles and prints 00!!
+  printf("this is the result: %c,  %c", result, my_char); 
 }
 
   
