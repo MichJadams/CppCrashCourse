@@ -1,6 +1,8 @@
 #include <cstdio>
+#include <concepts>
+// Modify mode to accept an integer concept. Verify that mdoe faily to instantiate with floating
+// types like double.
 
-// Implement mode as a template function!
 
 template<typename T>
 struct Frequency
@@ -57,7 +59,7 @@ private:
   size_t frequencies_index = 0; 
 };
 
-template<typename T>
+template<std::integral T>
 T mode(const T* values, size_t length)
 {
   Frequencies<T> f{length};
@@ -69,9 +71,10 @@ T mode(const T* values, size_t length)
   
   return f.find_most_frequent_value(); 
 }
+
 int main()
 {
-  float test[] = {1, 4, 5, 7, 3, 8, 2, 5, 5, 10, 10, 10, 10, 10, 10, 10, 10};
-  int result = mode<float>(test, sizeof(test)/sizeof(float));
+  int test[] = {1, 4, 5, 7, 3, 8, 2, 5, 5, 10, 10, 10, 10, 10, 10, 10, 10};
+  int result = mode<int>(test, sizeof(test)/sizeof(int));
   printf("result %d \n", result);
 }
