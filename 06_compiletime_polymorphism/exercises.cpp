@@ -1,23 +1,23 @@
 #include <cstdio>
 
-// the mode of a series of vlaues ithe value that appears most commonly.
-// implement a mode function using the following signature: int mode(constint* values, size_t length)
-// if you encounter  an error condition, return zero;
+// Implement mode as a template function!
 
+template<typename T>
 struct Frequency
 {
-  int value = 0;
+  T value = 0;
   int frequency = 0;
 };
 
+template<typename T>
 struct Frequencies
 {
   Frequencies(size_t max_length): max_length{max_length}
   {
-    frequencies = new Frequency[max_length];
+    frequencies = new Frequency<T>[max_length];
     frequencies_index = 0;
   }
-  void add_value_occurance(int value)
+  void add_value_occurance(T value)
   {
     bool not_found = true; 
     for(int i{}; i< frequencies_index; i++)
@@ -39,7 +39,7 @@ struct Frequencies
   
   int find_most_frequent_value()
   {
-    Frequency* highest_frequency = &frequencies[frequencies_index];
+    Frequency<T>* highest_frequency = &frequencies[frequencies_index];
     for(int i{}; i< frequencies_index; i++)
       {
 	if(frequencies[i].frequency > highest_frequency->frequency)
@@ -52,25 +52,26 @@ struct Frequencies
   }
   
 private:
-  size_t max_length; 
-  Frequency* frequencies;
-  size_t frequencies_index; 
+  size_t max_length = 0;  
+  Frequency<T>* frequencies = nullptr;
+  size_t frequencies_index = 0; 
 };
 
-int mode(const int* values, size_t length)
+template<typename T>
+T mode(const T* values, size_t length)
 {
-  Frequencies f{length};
+  Frequencies<T> f{length};
   for(int i{}; i < length; i ++)
     {
-      int value = values[i];
-	f.add_value_occurance(value);
+      T value = values[i];
+      f.add_value_occurance(value);
     }
   
   return f.find_most_frequent_value(); 
 }
 int main()
 {
-  int test[] = {1, 4, 5, 7, 3, 8, 2, 5, 5, 10, 10, 10, 10, 10, 10, 10, 10};
-  int result = mode(test, sizeof(test)/sizeof(int));
+  float test[] = {1, 4, 5, 7, 3, 8, 2, 5, 5, 10, 10, 10, 10, 10, 10, 10, 10};
+  int result = mode<float>(test, sizeof(test)/sizeof(float));
   printf("result %d \n", result);
 }
