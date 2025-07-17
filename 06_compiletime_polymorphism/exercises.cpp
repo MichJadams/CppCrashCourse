@@ -6,19 +6,18 @@
 
 struct Account
 {
-  Account(float amount): amount{amount}{}
-  void add_money(float amount_in)
+  Account(float amount_in): amount{amount_in}{}
+  
+  virtual void add_money(float amount_in)
   {
     amount += amount_in;
-
   }
-  float get_balance()
+  
+  virtual void print_balance() = 0;
+  
+  virtual bool remove_money(float amount_out)
   {
-    return amount;
-  }
-  bool remove_money(float amount_out)
-  {
-    if(amount - amount_out <= 0)
+    if(amount - amount_out < 0)
       {
 	return false;
       }
@@ -28,16 +27,33 @@ struct Account
 	return true;
       }
   }
-  
-private:
   long id;
   float amount =0;
 };
-  
+
+struct SavingsAccount : Account
+{
+  SavingsAccount(float amount_in): Account{amount_in}{}
+  void print_balance()  override
+  {
+    printf(" from the savings account! %f\n", amount);
+  }
+
+};
+
+struct CheckingAccount : Account
+{
+  CheckingAccount(float amount_in): Account{amount_in}{}
+  void print_balance()  override
+  {
+    printf("from the checking accounts!! %f \n", amount);
+  }
+
+};
+
 struct Bank
 {
-  template<typename T, typename I>
-  void move_money(T* source, I* target, float amount)
+  void move_money(Account* source, Account* target, float amount)
   {
     if(source->remove_money(amount))
       {
@@ -48,10 +64,15 @@ struct Bank
 
 int main()
 {
-  Account a{100};
-  Account b{ 50};
-  printf("starting balances a:%f b:%f \n", a.get_balance(), b.get_balance());
+  CheckingAccount a{100};
+  SavingsAccount b{ 50};
+  a.print_balance();
+  b.print_balance();
+  
+    
   Bank bank;
-  bank.move_money<Account, Account>(&a, &b, 50);
-  printf("ending balances a:%f b:%f \n", a.get_balance(), b.get_balance()); 
+  bank.move_money(&a, &b, 50);
+  printf("ending balances \n");
+  a.print_balance();
+  b.print_balance();
 }
