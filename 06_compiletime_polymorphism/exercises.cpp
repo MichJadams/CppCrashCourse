@@ -1,112 +1,57 @@
 #include <cstdio>
 #include <concepts>
-//6-5 Using the example from Chater 5, make a bank template class that
-// accepts a template parameter.
-// use this type parameter as the type of an account rather than long.
-// verify that you code still works using a Bank<long> class. 
+//6-6 Implement an Account class and instantiate a Bank<Account>.
+// Implement functions to Account to keep track of balances!
 
-template<typename T>
-struct Frequency
-{
-  T value = 0;
-  int frequency = 0;
-};
 
-template<typename T>
-struct Frequencies
-{
-  Frequencies(size_t max_length): max_length{max_length}
-  {
-    frequencies = new Frequency<T>[max_length];
-    frequencies_index = 0;
-  }
-  void add_value_occurance(T value)
-  {
-    bool not_found = true; 
-    for(int i{}; i< frequencies_index; i++)
-      {
-	if(frequencies[i].value == value)
-	  {
-	    not_found = false;
-	    frequencies[i].frequency += 1;
-	  }
-      }
-    
-    if(not_found)
-      {
-	frequencies[frequencies_index].value = value;
-	frequencies[frequencies_index].frequency = 1; 
-	frequencies_index += 1; 
-      }
-  }
-  
-  int find_most_frequent_value()
-  {
-    Frequency<T>* highest_frequency = &frequencies[frequencies_index];
-    for(int i{}; i< frequencies_index; i++)
-      {
-	if(frequencies[i].frequency > highest_frequency->frequency)
-	  {
-	    highest_frequency = &frequencies[i];
-	  }
-      }
-
-    return highest_frequency->value; 
-  }
-  
-private:
-  size_t max_length = 0;  
-  Frequency<T>* frequencies = nullptr;
-  size_t frequencies_index = 0; 
-};
-
-template<std::integral T, size_t Length>
-T mode(const T (&values)[Length])
-{
-  Frequencies<T> f{Length};
-  for(int i{}; i < Length; i ++)
-    {
-      T value = values[i];
-      f.add_value_occurance(value);
-    }
-  
-  return f.find_most_frequent_value(); 
-}
-
-template<std::integral T>
 struct Account
 {
-  T id;
-  float initial_amount;
-};
-  
-template<typename T>
-struct Bank
-{
-  Bank(size_t max_size) : max_size{max_size}
+  Account(float amount): amount{amount}{}
+  void add_money(float amount_in)
   {
-    accounts = new Account<T>[max_size]; 
+    amount += amount_in;
+
   }
-  
-  void add_new_account(T id,float initial_amount)
+  float get_balance()
   {
-    if(sizeof(accounts) < max_size)
+    return amount;
+  }
+  bool remove_money(float amount_out)
+  {
+    if(amount - amount_out <= 0)
       {
-	accounts[length].id = id;
-	accounts[length].initial_amount = initial_amount;
-	length++;
+	return false;
+      }
+    else
+      {
+	amount -= amount_out;
+	return true;
       }
   }
-
+  
 private:
-  Account<T>* accounts = nullptr;
-  int length = 0;
-  T account;
-  size_t max_size;
+  long id;
+  float amount =0;
+};
+  
+struct Bank
+{
+  template<typename T, typename I>
+  void move_money(T* source, I* target, float amount)
+  {
+    if(source->remove_money(amount))
+      {
+	target->add_money(amount);
+      }
+  }
 };
 
 int main()
 {
-  Bank<long> b{10};
-  b.add_new_account(100, 100); 
+  Account a{100};
+  Account b{ 50};
+  printf("starting balances a:%f b:%f \n", a.get_balance(), b.get_balance());
+  Bank bank;
+  bank.move_money<Account, Account>(&a, &b, 50);
+  printf("ending balances a:%f b:%f \n", a.get_balance(), b.get_balance()); 
 }
