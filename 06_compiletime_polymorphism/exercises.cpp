@@ -1,8 +1,6 @@
 #include <cstdio>
 #include <concepts>
-// Modify mode to accept an integer concept. Verify that mdoe faily to instantiate with floating
-// types like double.
-
+//6-4 refactor mean to accept an array rather than a pointer and length arguments. 
 
 template<typename T>
 struct Frequency
@@ -59,11 +57,11 @@ private:
   size_t frequencies_index = 0; 
 };
 
-template<std::integral T>
-T mode(const T* values, size_t length)
+template<std::integral T, size_t Length>
+T mode(const T (&values)[Length])
 {
-  Frequencies<T> f{length};
-  for(int i{}; i < length; i ++)
+  Frequencies<T> f{Length};
+  for(int i{}; i < Length; i ++)
     {
       T value = values[i];
       f.add_value_occurance(value);
@@ -75,6 +73,6 @@ T mode(const T* values, size_t length)
 int main()
 {
   int test[] = {1, 4, 5, 7, 3, 8, 2, 5, 5, 10, 10, 10, 10, 10, 10, 10, 10};
-  int result = mode<int>(test, sizeof(test)/sizeof(int));
+  int result = mode<int>(test);
   printf("result %d \n", result);
 }
