@@ -1,16 +1,16 @@
 #include <cstdio>
 
 
-int step(int input)
+int confusing(int &x)
 {
-  return input > 0? 1 : 0;
+  return x = 9, x++, x / 2;
 }
 
 int main()
 {
-  int result = step(10);
-
-  printf("this is the result %d", result);
+  int x{};
+  auto y = confusing(x);
+  printf(" X = %d and y = %d", x, y); 
 
   
 }
